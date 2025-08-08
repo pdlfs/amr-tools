@@ -1,0 +1,10 @@
+add_subdirectory(ember-benchmarks)
+add_subdirectory(scalebench)
+add_subdirectory(policybench)
+add_subdirectory(policysim)
+add_subdirectory(commbench)
+add_subdirectory(amr-preload-plugin)
+
+if (BUILD_TAU_PLUGIN)
+  add_subdirectory(amr-tau-plugin)
+endif()

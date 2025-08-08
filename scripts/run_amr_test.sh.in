@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+#
+# run_amr_test.sh  run one amr instance using params on command line
+#
+
+set -euo pipefail
+
+#########################################
+# default values for tunable parameters #
+#########################################
+arg_amr_bin="advection-example"
+arg_amr_deck="advection.example.16"
+arg_amr_glog_minloglevel="0"
+arg_amr_glog_v="0"
+arg_amr_monp2p_reduce="1"
+arg_amr_monp2p_put="0"
+arg_amr_mon_topk="20"
+arg_amr_mon_rankwise="1"
+arg_amr_mon_output_dir="/tmp"
+arg_cpubind="none"
+arg_host_suffix=""
+arg_lb_policy="baseline"
+arg_nlim="1"
+arg_nodes="1"
+arg_pre="libprof_preload.so"
+arg_procs_per_node="16"
+
+###############
+# Core script #
+###############
+source @CMAKE_INSTALL_PREFIX@/scripts/common.sh
+source ${dfsu_prefix}/scripts/amr_common.sh
+
+# load command line args into $arg_* vars (overwrites default values)
+loadargs "$@"
+
+# init global variables used by and shared with common modules
+nodes="$arg_nodes"
+ppn="$arg_procs_per_node"
+cores=$((ppn * nodes))
+host_suffix="$arg_host_suffix"
+
+message "Script begin..."
+# keep track of start time so we can see how long this takes
+timein=`date`
+
+### lustre (or some other shared area for output) ###
+get_jobdir
+
+### set output directory for amrmon ###
+arg_amr_mon_output_dir="${jobdir}"
+
+### machine list ###
+gen_hosts
+
+### now do AMR ###
+amr_prepare_expdir "${arg_amr_bin}" "${arg_lb_policy}"
+
+amr_prepare_deck "${arg_amr_deck}" "${arg_lb_policy}" "${arg_nlim}"
+
+#
+# XXX: $vpic_nodes (an old name) has the list of allocated nodes sep'd
+# by a comma in it.   would have liked to use all_nodes, but that currently
+# uses a \n instead of a comma (bug?)
+#
+amr_do_run "$arg_pre" "$arg_amr_bin" "$arg_amr_deck" \
+	"$vpic_nodes" "$arg_cpubind"
+
+# overall time
+timeout=$(date)
+
+message "Script complete!"
+message "start: ${timein}"
+message "  end: ${timeout}"
+
+exit 0

@@ -4,6 +4,9 @@
 #include <vector>
 
 namespace amr {
+// HybridAssignmentCppFirst: described as CPLX in the paper
+// Compute an initial CDP placement, and then rebalance
+// `lpt_ranks` ranks using LPT
 class HybridAssignmentCppFirst {
  public:
   HybridAssignmentCppFirst(int lpt_ranks, int alt_solncnt_max)

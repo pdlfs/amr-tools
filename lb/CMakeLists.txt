@@ -12,7 +12,7 @@ set(lb_srcs
     src/lb_lspt.cc
     src/lb_cpp_iter.cc
     src/lb_hybrid.cc
-    src/lb_hybrid2.cc
+    src/lb_cplx.cc
     src/lb_policies.cc
     src/policy_utils.cc)
 

@@ -1,9 +1,9 @@
 #pragma once
 
-#include <iomanip>
-#include <string>
-#include <sstream>
 #include "policy.h"
+#include <iomanip>
+#include <sstream>
+#include <string>
 
 namespace amr {
 struct PolicyOptsCDPI {
@@ -12,11 +12,12 @@ struct PolicyOptsCDPI {
 };
 
 struct PolicyOptsHybridCDPFirst {
-  bool v2;              // whether to use v2 or not, always yes
-  double lpt_frac;      // frac of ranks to run LPT on
-  int alt_solncnt_max;  // max no. of alt solns to explore
+  bool v2;             // whether to use v2 or not, always yes
+  double lpt_frac;     // frac of ranks to run LPT on
+  int alt_solncnt_max; // max no. of alt solns to explore
 };
 
+// PolicyOptsILP: options for Gurobi-based solver
 struct PolicyOptsILP {
   float obj_lb_time_limit;
   float obj_lb_rel_tol;
@@ -26,11 +27,8 @@ struct PolicyOptsILP {
   float obj_loc_mip_gap;
 
   PolicyOptsILP()
-      : obj_lb_time_limit(10)
-      , obj_lb_rel_tol(0.1)
-      , obj_lb_mip_gap(0.1)
-      , obj_loc_time_limit(10)
-      , obj_loc_mip_gap(0.1) {}
+      : obj_lb_time_limit(10), obj_lb_rel_tol(0.1), obj_lb_mip_gap(0.1),
+        obj_loc_time_limit(10), obj_loc_mip_gap(0.1) {}
 
   std::string ToString() const {
     std::stringstream ss;
@@ -44,9 +42,10 @@ struct PolicyOptsILP {
   }
 };
 
+// PolicyOptsHybrid: options for CPLX
 struct PolicyOptsHybrid {
-  float frac_lpt;
-  float lpt_target;
+  float frac_lpt;   // pct LPT (0-1)
+  float lpt_target; // may not be used
 
   PolicyOptsHybrid() : frac_lpt(0.2), lpt_target(0) {}
 
@@ -59,6 +58,7 @@ struct PolicyOptsHybrid {
   }
 };
 
+// PolicyOptsChunked: used to parallelize CDP execution
 struct PolicyOptsChunked {
   int chunk_size;
   int parallelism;
@@ -73,7 +73,9 @@ struct LBPolicyWithOpts {
   std::string id;
   std::string name;
   LoadBalancePolicy policy;
-  bool skip_cache;
+  bool skip_cache; 
+  // solution cache, can be used to reuse past placements
+  // we disabled this in the final runs
 
   union {
     PolicyOptsCDPI cdp_opts;
@@ -83,4 +85,4 @@ struct LBPolicyWithOpts {
     PolicyOptsChunked chunked_opts;
   };
 };
-}  // namespace amr
+} // namespace amr

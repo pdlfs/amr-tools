@@ -12,6 +12,8 @@
 namespace amr {
 class PolicyTools {
  public:
+   // GetDisorder: get block placement "disorder"
+   // Disorder is a scalar metric used as a proxy for placement locality
   static double GetDisorder(std::vector<int>& array) {
     double disorder = 0;
     for (int i = 0; i < array.size() - 1; i++) {
@@ -21,6 +23,8 @@ class PolicyTools {
     return disorder;
   }
 
+   // GetLinearDisorder: get block placement "disorder"
+   // Linear disorder is a scalar metric used as a proxy for placement locality
   static double GetLinearDisorder(std::vector<int>& array) {
     double loc_score = 0;
     for (int i = 0; i < array.size(); i++) {

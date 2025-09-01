@@ -16,9 +16,7 @@ namespace amr {
 class Utils {
  public:
   static int EnsureDir(pdlfs::Env* env, const std::string& dir_path) {
-    pdlfs::Status s = env->CreateDir(dir_path.c_str());
-    if (s.ok()) {
-      MLOG(MLOG_INFO, "\t- Created successfully.");
+    pdlfs::Status s = env->CreateDir(dir_path.c_str()); if (s.ok()) { MLOG(MLOG_INFO, "\t- Created successfully.");
     } else if (s.IsAlreadyExists()) {
       MLOG(MLOG_INFO, "\t- Already exists.");
     } else {

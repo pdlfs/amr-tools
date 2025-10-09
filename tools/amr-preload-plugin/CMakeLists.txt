@@ -21,7 +21,7 @@ if(APPLE)
         LINK_FLAGS "-Wl,-all_load")
 else()
     set_target_properties(amr_preload PROPERTIES 
-        LINK_FLAGS "-Wl,--whole-archive")
+        LINK_FLAGS "-Wl,--no-as-needed")
 endif()
 
 add_executable(amr_preload_example example_prog.cc)

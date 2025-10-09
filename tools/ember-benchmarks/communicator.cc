@@ -1,4 +1,5 @@
 #include "communicator.h"
+#include <unistd.h>
 
 void Communicator::DoIteration() {
   int req_count = 0;
@@ -48,6 +49,7 @@ void Communicator::DoPoll(int num_requests) {
                 << num_requests
                 << " requests completed. Pending: " + pending_req_str;
     }
+
     sleep(2); // Wait for 1 second before polling again
   }
 }

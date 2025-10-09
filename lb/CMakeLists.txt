@@ -1,4 +1,6 @@
-find_package(MPI REQUIRED)
+include(CMakePackageConfigHelpers)
+
+find_package(MPI REQUIRED COMPONENTS CXX)
 find_package(pdlfs-common CONFIG REQUIRED)
 find_package(GUROBI)
 find_package(glog CONFIG REQUIRED)
@@ -54,6 +56,8 @@ if(GUROBI_FOUND)
   target_include_directories(lb PRIVATE ${GUROBI_INCLUDE_DIRS})
 endif()
 
+set(LB_INSTALL_CMAKE_DIR "lib/cmake/lb")
+
 install(
   TARGETS lb
   EXPORT lb
@@ -61,8 +65,17 @@ install(
   LIBRARY DESTINATION lib)
 install(
   EXPORT lb
-  FILE lb-config.cmake
-  DESTINATION lib/cmake/lb)
+  FILE lb-targets.cmake
+  DESTINATION ${LB_INSTALL_CMAKE_DIR})
+
+configure_package_config_file(
+  cmake/lb-config.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/lb-config.cmake
+  INSTALL_DESTINATION ${LB_INSTALL_CMAKE_DIR})
+
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/lb-config.cmake
+  DESTINATION ${LB_INSTALL_CMAKE_DIR})
 install(
   DIRECTORY ../../include
   DESTINATION .

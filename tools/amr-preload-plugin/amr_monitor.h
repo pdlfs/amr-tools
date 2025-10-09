@@ -13,8 +13,11 @@
 #include "types.h"
 
 #include <cinttypes>
+#include <sstream>
 #include <glog/logging.h>
 #include <pdlfs-common/env.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 namespace amr {
 

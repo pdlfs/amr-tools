@@ -1,5 +1,11 @@
 #include "tools-common/logging.h"
 
+#include <cinttypes>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <time.h>
+
 #include <pdlfs-common/env.h>
 #include <pdlfs-common/slice.h>
 #include <string>

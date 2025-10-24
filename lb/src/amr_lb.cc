@@ -2,16 +2,19 @@
 
 #include "lb-common/lb_policies.h"
 #include "lb-common/policy_utils.h"
+#include "tools-common/logging.h"
 
 namespace amr {
 namespace lb {
 int LoadBalance::AssignBlocks(PlacementArgs args) {
+  Logging::Init("amr_lb");
   auto& policy = PolicyUtils::GetPolicy(args.policy_name.c_str());
   return LoadBalancePolicies::AssignBlocks(policy, args.costlist, args.ranklist,
                                            args.nranks);
 }
 
 int LoadBalance::AssignBlocksMpi(PlacementArgsMpi args) {
+  Logging::Init("amr_lb");
   auto& pin = args.stdargs;
   // This interface includes caching, and is not satistfactory, but
   // retaining for compatibility for now

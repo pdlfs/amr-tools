@@ -57,6 +57,10 @@ if(GUROBI_FOUND)
 endif()
 
 set(LB_INSTALL_CMAKE_DIR "lib/cmake/lb")
+set(LB_INSTALL_INCLUDE_DIR "include")
+
+set(LB_PUBLIC_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/amr_lb.h)
 
 install(
   TARGETS lb
@@ -77,9 +81,7 @@ install(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/lb-config.cmake
   DESTINATION ${LB_INSTALL_CMAKE_DIR})
 install(
-  DIRECTORY ../../include
-  DESTINATION .
-  FILES_MATCHING
-  PATTERN "*.h")
+  FILES ${LB_PUBLIC_HEADERS}
+  DESTINATION ${LB_INSTALL_INCLUDE_DIR})
 
 add_subdirectory(tests)

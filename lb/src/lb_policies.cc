@@ -21,6 +21,7 @@ int LoadBalancePolicies::AssignBlocksCached(const char *policy_name,
                                             std::vector<int> &ranklist,
                                             int nranks, int my_rank,
                                             MPI_Comm comm) {
+  Logging::Init("amr_lb");
   static AssignmentCache cache(Constants::kMaxAssignmentCacheReuse);
   int rv = 0;
 

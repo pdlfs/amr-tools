@@ -4,6 +4,25 @@
 #include <mpi.h>
 #include <stdarg.h>
 
+// Singleton class for glog initialization.
+// Init() can be called multiple times safely.
+class Logging {
+ public:
+  static void Init(const char* argv0) {
+    static Logging instance(argv0);
+  }
+
+ private:
+  explicit Logging(const char* argv0) {
+    FLAGS_logtostderr = true;
+    FLAGS_v = -1;  // Disable VLOG messages (no debug output)
+    google::InitGoogleLogging(argv0);
+  }
+
+  Logging(const Logging&) = delete;
+  Logging& operator=(const Logging&) = delete;
+};
+
 inline std::string fmtstr(int bufsz, const char *fmt, ...) {
   char buf[bufsz];
   va_list args;

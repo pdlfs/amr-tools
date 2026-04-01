@@ -32,9 +32,9 @@ struct RunType {
 
   int AssignBlocksParallel(std::vector<double> const& costlist,
                            std::vector<int>& ranklist, int nranks,
-                           MPI_Comm comm) {
+                           int my_rank, MPI_Comm comm) {
     int rv = LoadBalancePolicies::AssignBlocksCached(policy.c_str(), costlist,
-                                                     ranklist, nranks, comm);
+                                                     ranklist, nranks, my_rank, comm);
     return rv;
   }
 

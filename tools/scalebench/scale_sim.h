@@ -68,7 +68,7 @@ public:
         if (comm == MPI_COMM_NULL) {
           rv = r.AssignBlocks(costs, ranks, rp.nranks);
         } else {
-          rv = r.AssignBlocksParallel(costs, ranks, rp.nranks, comm);
+          rv = r.AssignBlocksParallel(costs, ranks, rp.nranks, fake_rank, comm);
         }
 
         if (rv) {

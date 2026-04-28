@@ -11,6 +11,6 @@ install(
 
 install(
   DIRECTORY scripts/
-  DESTINATION ${CMAKE_INSTALL_PREFIX}/scripts
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/scripts/amr-tools
   FILES_MATCHING
   PATTERN "*.sh")

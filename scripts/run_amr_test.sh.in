@@ -30,7 +30,7 @@ arg_procs_per_node="16"
 # Core script #
 ###############
 source @CMAKE_INSTALL_PREFIX@/scripts/common.sh
-source ${dfsu_prefix}/scripts/amr_common.sh
+source ${dfsu_prefix}/scripts/amr-tools/amr_common.sh
 
 # load command line args into $arg_* vars (overwrites default values)
 loadargs "$@"

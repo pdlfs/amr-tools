@@ -19,5 +19,5 @@ foreach (lcv ${install-programs-in})
   list (APPEND install-programs-in-done ${CMAKE_CURRENT_BINARY_DIR}/${out})
 endforeach ()
 
-install (PROGRAMS ${install-programs} DESTINATION scripts)
-install (PROGRAMS ${install-programs-in-done} DESTINATION scripts)
+install (PROGRAMS ${install-programs} DESTINATION scripts/amr-tools)
+install (PROGRAMS ${install-programs-in-done} DESTINATION scripts/amr-tools)
